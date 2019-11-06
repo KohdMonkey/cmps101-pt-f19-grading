@@ -35,7 +35,7 @@ echo "Press enter to continue"
 read verbose
 for NUM in $(seq 1 $NUMTESTS); do
   rm -f outfile$NUM.txt
-  timeout 5 valgrind --leak-check=full -v ./Arithmetic infile$NUM.txt outfile$NUM.txt &> garbage >> garbage #all stdout/stderr thrown away
+  timeout 10 ./Arithmetic infile$NUM.txt outfile$NUM.txt &> garbage >> garbage #all stdout/stderr thrown away
   diff -bBwu outfile$NUM.txt model-outfile$NUM.txt > diff$NUM.txt &>> diff$NUM.txt
   echo "Arithmetic Test $NUM:"
   echo "=========="
@@ -45,6 +45,11 @@ for NUM in $(seq 1 $NUMTESTS); do
     let passed+=1
   fi
 done
+
+echo ""
+echo ""
+
+valgrind -v ./Arithmetic infile3.txt outfile3.txt &> garbage >> garbage
 
 echo ""
 echo ""
