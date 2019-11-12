@@ -78,6 +78,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             *pA = stringToBigInteger("+13378008135");
             makeZero(*pA);
             if(sign(*pA) != 0) return 1;
+            return 0;
         }
         case Copy_test: {
             *pA = stringToBigInteger("+13378008135");
@@ -119,6 +120,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
 
             if(!equals(*pC, *pD)) return 1;
             freeBigInteger(pB);
+            freeBigInteger(pD);
 
             //add a positive and a negative integer
             //-> pos + neg = 0
@@ -158,6 +160,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             if(!equals(*pC, *pD)) return 1;
             freeBigInteger(pB);
             freeBigInteger(pC);
+            freeBigInteger(pD);
 
             //-> neg + pos == 0
             negate(*pA); //A-> -111122223333
@@ -183,6 +186,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
 
             //-> neg + neg
             freeBigInteger(pB);
+            freeBigInteger(pC);
             *pB = stringToBigInteger("-222211110000");
             *pD = stringToBigInteger("-333333333333");
             *pC = sum(*pA, *pB);
