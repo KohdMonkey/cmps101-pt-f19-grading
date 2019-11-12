@@ -57,7 +57,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
 
             *pC = stringToBigInteger("+13378008135");
             *pD = stringToBigInteger("-13378008135");
-            if(sign(*pC) != 1 || sign(*pD) != -1) return 1;
+            if(sign(*pC) != 1 || sign(*pD) != -1) return 2;
 
             freeBigInteger(pC);
             freeBigInteger(pD);
@@ -70,7 +70,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             if(sign(*pA) != -1) return 1;
 
             negate(*pA);
-            if(sign(*pA) != 1) return 1;
+            if(sign(*pA) != 1) return 2;
 
             return 0;
         }
@@ -78,18 +78,17 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             *pA = stringToBigInteger("+13378008135");
             makeZero(*pA);
             if(sign(*pA) != 0) return 1;
-	    return 0;
         }
         case Copy_test: {
             *pA = stringToBigInteger("+13378008135");
             *pB = copy(*pA);
-            if(sign(*pB) != 1) return 1;
+            if(sign(*pB) != 1) return 2;
 
             negate(*pA);
-            if(sign(*pB) != 1) return 1;
+            if(sign(*pB) != 1) return 3;
 
             *pC = copy(*pA);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 4;
 
             return 0;
         }
@@ -120,32 +119,31 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
 
             if(!equals(*pC, *pD)) return 1;
             freeBigInteger(pB);
-	    freeBigInteger(pD);
 
             //add a positive and a negative integer
             //-> pos + neg = 0
             *pB = stringToBigInteger("-111122223333");
             add(*pC, *pA, *pB);
-            if(sign(*pC) != 0) return 1;
+            if(sign(*pC) != 0) return 2;
             freeBigInteger(pB);
 
             //-> pos + neg > 0
             *pB = stringToBigInteger("-110122223333");
             add(*pC, *pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 3;
             freeBigInteger(pB);
 
             //-> pos + neg < 0
             *pB = stringToBigInteger("-112122223333");
             add(*pC, *pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 4;
 
             //-> neg + neg = neg
             freeBigInteger(pA);
             *pA = stringToBigInteger("-221211110000");
             *pD = stringToBigInteger("-333333333333");
             add(*pC, *pA,*pB);
-            if(!equals(*pC, *pD)) return 1;
+            if(!equals(*pC, *pD)) return 5;
 
             return 0;
         }
@@ -160,20 +158,19 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             if(!equals(*pC, *pD)) return 1;
             freeBigInteger(pB);
             freeBigInteger(pC);
-	    freeBigInteger(pD);
 
             //-> neg + pos == 0
             negate(*pA); //A-> -111122223333
             *pB = stringToBigInteger("+111122223333");
             *pC = sum(*pA, *pB);
-            if(sign(*pC) != 0) return 1;
+            if(sign(*pC) != 0) return 2;
             freeBigInteger(pB);
             freeBigInteger(pC);
 
             //-> neg + pos > 0
             *pB = stringToBigInteger("+112122223333");
             *pC = sum(*pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 3;
             freeBigInteger(pB);
             freeBigInteger(pC);
 
@@ -181,16 +178,15 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             //negate(*pA);
             *pB = stringToBigInteger("+110122223333");
             *pC = sum(*pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 4;
 
 
             //-> neg + neg
             freeBigInteger(pB);
-            freeBigInteger(pC);
             *pB = stringToBigInteger("-222211110000");
             *pD = stringToBigInteger("-333333333333");
             *pC = sum(*pA, *pB);
-            if(!equals(*pC, *pD)) return 1;
+            if(!equals(*pC, *pD)) return 5;
 
             return 0;
         }
@@ -224,22 +220,22 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             freeBigInteger(pB);
             *pB = stringToBigInteger("121122223333");
             subtract(*pC, *pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 2;
 
             // pos - pos > 0
             freeBigInteger(pB);
             *pB = stringToBigInteger("101122223333");
             subtract(*pC, *pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 3;
 
             //pos - neg = pos
             negate(*pB);
             subtract(*pC, *pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 4;
 
             //neg - pos = neg
             subtract(*pC, *pB, *pA);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 5;
 
             return 0;
         }
@@ -258,7 +254,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             freeBigInteger(pC);
             *pB = stringToBigInteger("-112122223333");
             *pC = diff(*pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 2;
 
 
             //neg - neg < 0
@@ -266,13 +262,13 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             freeBigInteger(pC);
             *pB = stringToBigInteger("-110122223333");
             *pC = diff(*pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 3;
 
             //neg - pos = neg
             negate(*pB);
             freeBigInteger(pC);
             *pC = diff(*pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 4;
 
             return 0;
         }
@@ -288,7 +284,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             // pos * neg = neg
             negate(*pB);
             multiply(*pC, *pA, *pB);
-            if(sign(*pC) != -1) return 1;
+            if(sign(*pC) != -1) return 2;
 
             return 0;
         }
@@ -304,7 +300,7 @@ uint8_t runTest(BigInteger *pA, BigInteger *pB, BigInteger *pC, BigInteger *pD, 
             //neg * neg = pos
             negate(*pB);
             *pC = prod(*pA, *pB);
-            if(sign(*pC) != 1) return 1;
+            if(sign(*pC) != 1) return 2;
 
             return 0;
         }
