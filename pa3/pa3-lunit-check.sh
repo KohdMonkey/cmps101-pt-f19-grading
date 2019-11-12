@@ -25,8 +25,7 @@ echo ""
 gcc -c -std=c99 -Wall -g ModelListTest.c List.c
 gcc -o ModelListTest ModelListTest.o List.o
 
-timeout $TIME valgrind --leak-check=full -v ./ModelListTest -v > ListTest-out.txt
+timeout $TIME valgrind --leak-check=full -v ./ModelListTest -v
 
-cat ListTest-out.txt
 
 rm -f *.o Arithmetic garbage

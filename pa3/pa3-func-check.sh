@@ -49,7 +49,7 @@ done
 echo ""
 echo ""
 
-valgrind -v ./Arithmetic infile3.txt outfile3.txt &> garbage >> garbage
+timeout 10 valgrind -v --leak-check=full ./Arithmetic infile3.txt outfile3.txt
 
 echo ""
 echo ""

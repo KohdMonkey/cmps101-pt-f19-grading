@@ -25,8 +25,6 @@ echo ""
 gcc -c -std=c99 -Wall -g ModelBigIntegerTest.c BigInteger.c List.c
 gcc -o ModelBigIntegerTest ModelBigIntegerTest.o BigInteger.o List.o
 
-timeout $TIME valgrind --leak-check=full -v ./ModelBigIntegerTest -v > ModelBigIntegerTest-out.txt
-
-cat ModelBigIntegerTest-out.txt
+timeout $TIME valgrind --leak-check=full -v ./ModelBigIntegerTest -v
 
 rm -f *.o
