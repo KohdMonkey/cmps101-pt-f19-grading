@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 SRCDIR=https://raw.githubusercontent.com/KohdMonkey/cmps101-pt-f19-grading/master/pa3
 NUMTESTS=5
